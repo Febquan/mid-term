@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev:be": "nodemon BE/app.js"
+    "dev:be": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
