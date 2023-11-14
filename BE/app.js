@@ -9,13 +9,18 @@ const userAuthRoute = require("./route/userRoutes");
 const port = 3000;
 //cors
 
-app.use(cors());
-app.options("*", cors());
-app.use(bodyParser.json());
 app.use(cookieParser());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+  })
+);
+
+app.use(bodyParser.json());
 //Allowance
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Credentials", true);
   res.setHeader(
     "Access-Control-Allow-Methods",
     "OPTIONS, GET, POST, PUT, PATCH, DELETE"
@@ -26,6 +31,7 @@ app.use((req, res, next) => {
 
 app.use("/user", userAuthRoute);
 app.use("/", authMiddleware, (req, res, next) => {
+  console.log(req.cookies.token);
   res.send("hello");
 });
 
@@ -34,7 +40,7 @@ app.use((error, req, res, next) => {
   console.log(error);
   const status = error.statusCode || 500;
   const message = error.message;
-  res.status(status).json({ message: message, success: false });
+  res.status(status).json({ error: message, success: false });
 });
 
 app.listen(port, () => {

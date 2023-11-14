@@ -1,6 +1,6 @@
 // tailwind.config.js
 import { nextui } from "@nextui-org/react";
-
+import tailwindCss3d from "tailwindcss-3d";
 /** @type {import('tailwindcss').Config} */
 export const content = [
   // ...
@@ -19,10 +19,17 @@ export const theme = {
     animation: {
       onoffLine: "onoff 1s ease-in-out infinite",
     },
+    backgroundImage: {
+      ourservice: "url('./src/assets/ourServices.png')",
+    },
+    content: {
+      purple: 'url("./src/assets/topPurpleCircle.svg")',
+    },
   },
 };
 export const darkMode = "class";
 export const plugins = [
+  tailwindCss3d({ legacy: true }),
   nextui({
     themes: {
       dark: {
@@ -31,6 +38,7 @@ export const plugins = [
             DEFAULT: "#4349E6",
             foreground: "#fff",
           },
+
           color: "#fff",
           focus: "#4349E6",
           background: "#010420",

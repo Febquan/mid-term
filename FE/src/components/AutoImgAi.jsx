@@ -1,5 +1,6 @@
 // import Image from "@nextui-org/react";
 import { useEffect, useState } from "react";
+import { Image } from "@nextui-org/react";
 
 const ImgSrc = [
   {
@@ -15,29 +16,32 @@ const ImgSrc = [
     url: "https://image.lexica.art/full_jpg/c412f70f-8cb4-4e43-971d-f58a0c945e7a",
   },
 ];
-
+const TYPE_SPEED = 50;
+const WAIT_TIME = 3000;
 export default function AutoImgAi() {
+  const [url, setUrl] = useState("");
   const [text, setText] = useState("");
   const [content, setContent] = useState(0);
 
   useEffect(() => {
     const imgInfo = ImgSrc[content % ImgSrc.length];
+    setUrl(imgInfo.url);
     const arrayOfWord = imgInfo.text.split("");
-    let i = -1;
+    let i = 0;
     let timeoutId;
 
     const interval = setInterval(() => {
+      const currentI = i;
+      setText((prev) => new String(prev + arrayOfWord[currentI]));
       i++;
-      setText((prev) => prev + arrayOfWord[i]);
-
-      if (i > imgInfo.text.length - 2) {
+      if (i == imgInfo.text.length) {
         clearInterval(interval);
         timeoutId = setTimeout(() => {
           setContent((prev) => prev + 1);
           setText("");
-        }, 3000);
+        }, WAIT_TIME);
       }
-    }, 90);
+    }, TYPE_SPEED);
 
     return () => {
       clearInterval(interval);
@@ -46,9 +50,12 @@ export default function AutoImgAi() {
   }, [content]);
 
   return (
-    <div className="flex flex-col">
-      <div>
-        <span className="text-large">
+    <div className=" flex  flex-col items-center justify-center  gap-10 ">
+      <div className=" sm:w-4/5 md:w-[30rem]">
+        <Image src={url}></Image>
+      </div>
+      <div className=" my-gray-box flex h-[12ch] items-center justify-center p-[1rem] sm:w-[20rem] md:w-[35rem]">
+        <span className="text-[0.8rem] lg:text-sm">
           {text} <span className="animate-onoffLine"> |</span>
         </span>
       </div>

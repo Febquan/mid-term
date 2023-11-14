@@ -16,5 +16,6 @@ model User {
   username String   @unique
   email    String   @unique
   password String
+  isVerify Boolean  @default(false)
   createdAt DateTime @default(now())
 }
