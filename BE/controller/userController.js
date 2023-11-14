@@ -16,7 +16,15 @@ async function signupController(req, res) {
 }
 async function autoLoginController(req, res) {
   try {
-    res.json({ success: true });
+    const user = await prisma.user.findUnique({
+      where: {
+        username: req.user.userId,
+      },
+    });
+    res.json({
+      success: true,
+      userInfo: { userName: user.username, email: user.email },
+    });
   } catch (error) {
     res.status(400).json({ success: false, error: error.message });
   }
@@ -33,15 +41,14 @@ async function LogOutController(req, res) {
 async function loginController(req, res) {
   const { userId, password } = req.body;
   try {
-    const token = await login(userId, password);
-    console.log(token, "sds", process.env.NODE_ENV);
+    const { token, userInfo } = await login(userId, password);
     res.cookie("token", token, {
       secure: process.env.NODE_ENV !== "development",
-      // httpOnly: true,
+      httpOnly: true,
       maxAge: 3600000, // 1 hour in milliseconds
       // sameSite: "strict", // Adjust according to your needs
     });
-    res.json({ success: true });
+    res.json({ success: true, userInfo });
   } catch (error) {
     res.status(401).json({ success: false, error: error.message });
   }
@@ -172,5 +179,6 @@ async function login(userId, password) {
     process.env.TOKEN_PRIVATE_KEY,
     { expiresIn: "8h" }
   );
-  return token;
+  const userInfo = { userName: user.username, email: user.email };
+  return { token, userInfo };
 }

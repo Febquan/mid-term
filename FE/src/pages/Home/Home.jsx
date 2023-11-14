@@ -8,18 +8,10 @@ import { Button } from "@nextui-org/react";
 import LogoLarge from "./../../assets/logolarge.svg";
 import { Image } from "@nextui-org/react";
 import PriceBox from "./PriceBox";
-import api from "../../axios/axios";
+
 export default function Home() {
   return (
     <div>
-      <button
-        onClick={async () => {
-          const res = await api.get("/");
-          console.log(res);
-        }}
-      >
-        click
-      </button>
       <div className="relative isolate flex h-fit w-full items-center justify-center bg-gradient-to-b from-black to-[#010420] p-[4rem]  lg:px-[6rem] 2xl:h-[calc(100vh-64px)]">
         <img
           className="user-select-none pointer-events-none absolute left-1/2 top-1/2  translate-x-[-50%] translate-y-[-50%] transform "

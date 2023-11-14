@@ -13,11 +13,16 @@ import Logo from "./../assets/logo.svg";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLocation } from "react-router-dom";
+import { useSelector } from "react-redux";
+import MyPopupUser from "./MyPopupUser";
+
 function MyNavBar() {
   const [section, setSection] = useState([
     { name: "Home", isActive: true },
     { name: "Landing page", isActive: false },
   ]);
+  const isLogin = useSelector((state) => state.auth.isLogin);
+
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const location = useLocation();
   const isLoginSignup = location.pathname === "/Login" ? true : false;
@@ -76,9 +81,17 @@ function MyNavBar() {
           </NavbarContent>
           <NavbarContent justify="end">
             <NavbarItem className=" lg:flex">
-              <Button as={Link} color="primary" to="/Login">
-                Login
-              </Button>
+              {!isLogin && (
+                <Button as={Link} color="primary" to="/Login">
+                  Login
+                </Button>
+              )}
+              {isLogin && (
+                <>
+                  <MyPopupUser></MyPopupUser>
+                  {/* <Button color="default">Logout</Button> */}
+                </>
+              )}
             </NavbarItem>
           </NavbarContent>
 

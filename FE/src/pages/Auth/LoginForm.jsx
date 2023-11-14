@@ -10,6 +10,10 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
+import { useDispatch } from "react-redux";
+import { loginSetState } from "./../../store/authSlice";
+import { useQueryClient } from "@tanstack/react-query";
+
 const Schema = z.object({
   username: z.string().min(1, { message: "Emty field" }),
   password: z.string().min(6),
@@ -18,6 +22,8 @@ export default function LoginForm({ handleChangeLogin }) {
   const [isLoading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [errorMess, setErrorMess] = useState(null);
+  const dispatch = useDispatch();
+  const queryClient = useQueryClient();
   const {
     register,
     handleSubmit,
@@ -26,26 +32,40 @@ export default function LoginForm({ handleChangeLogin }) {
   } = useForm({
     resolver: zodResolver(Schema), // Hook up zodResolver
   });
+
   const onLoginSubmit = async (data) => {
     console.log(data);
     try {
       setLoading(true);
-      const res = await api.post(
-        "/user/login",
-        {
-          userId: data.username,
-          password: data.password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
+
+      const fetchUserInfo = async () => {
+        try {
+          const res = await api.post(
+            "/user/login",
+            {
+              userId: data.username,
+              password: data.password,
+            },
+            {
+              withCredentials: true,
+            },
+          );
+          if (res.data.success == true) {
+            return res.data.userInfo;
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      };
+      await queryClient.fetchQuery({
+        queryKey: ["userInfo"],
+        queryFn: fetchUserInfo,
+      });
+      reset();
+      dispatch(loginSetState());
       setLoading(false);
-      if (res.data.success == true) {
-        console.log(res);
-        reset();
-        // navigate("/Home");
-      }
+      // dispatch(setUserInFo(res.data.userInfo));
+      navigate("/Home");
     } catch (err) {
       console.log(err);
       setLoading(false);

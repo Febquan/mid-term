@@ -9,7 +9,6 @@ function verifyToken(token) {
 }
 function authMiddleware(req, res, next) {
   const token = req.cookies.token;
-  console.log(token);
   if (!token) {
     const error = new Error("Unauthorized");
     error.statusCode = 401;
@@ -18,6 +17,7 @@ function authMiddleware(req, res, next) {
   }
 
   const decoded = verifyToken(token);
+  console.log(decoded);
 
   if (!decoded) {
     const error = new Error("Token Unauthorized");
