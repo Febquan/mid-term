@@ -31,7 +31,6 @@ app.use((req, res, next) => {
 
 app.use("/user", userAuthRoute);
 app.use("/", authMiddleware, (req, res, next) => {
-  console.log(req.cookies.token);
   res.send("hello");
 });
 

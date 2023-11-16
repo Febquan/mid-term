@@ -6,7 +6,6 @@ const myMailer = require("./../utils/mailer");
 
 async function signupController(req, res) {
   const { username, email, password } = req.body;
-  console.log(username, email, password);
   try {
     const user = await signUp(username, email, password);
     res.json({ success: true, user });
@@ -18,9 +17,10 @@ async function autoLoginController(req, res) {
   try {
     const user = await prisma.user.findUnique({
       where: {
-        username: req.user.userId,
+        id: req.user.userId,
       },
     });
+
     res.json({
       success: true,
       userInfo: { userName: user.username, email: user.email },
@@ -54,30 +54,6 @@ async function loginController(req, res) {
   }
 }
 
-async function changeInfoController(req, res) {
-  const { username, newUserName } = req.body;
-  try {
-    const user = await prisma.user.findUnique({
-      where: {
-        username: newUserName,
-      },
-    });
-    if (user) {
-      throw new Error("User name already exit !");
-    }
-    await prisma.user.update({
-      where: {
-        username,
-      },
-      data: {
-        username: newUserName,
-      },
-    });
-    res.json({ success: true });
-  } catch (error) {
-    res.status(400).json({ success: false, error: error.message });
-  }
-}
 const verify = async (req, res, next) => {
   try {
     const hashedUserName = req.query.token;
@@ -87,7 +63,6 @@ const verify = async (req, res, next) => {
     );
 
     if (userName) {
-      console.log(userName);
       await prisma.user.update({
         where: { username: userName },
         data: { isVerify: true },
@@ -105,11 +80,73 @@ const verify = async (req, res, next) => {
     next(err);
   }
 };
+async function changePasswordController(req, res) {
+  const { oldPassword, newPassword } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        id: req.user.userId,
+      },
+    });
+    if (!user) {
+      throw new Error("Cant not indentify your account");
+    }
+    const passwordMatch = await bcrypt.compare(oldPassword, user.password);
+    if (!passwordMatch) {
+      throw new Error("Wrong old password !");
+    }
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.update({
+      where: {
+        id: req.user.userId,
+      },
+      data: {
+        password: hashedPassword,
+      },
+    });
+    res.json({
+      success: true,
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+}
+
+async function changeInfoController(req, res) {
+  const { newUserName } = req.body;
+  try {
+    const user = await prisma.user.findUnique({
+      where: {
+        username: newUserName,
+      },
+    });
+    if (user) {
+      throw new Error("User name already exit !");
+    }
+    const newUser = await prisma.user.update({
+      where: {
+        id: req.user.userId,
+      },
+      data: {
+        username: newUserName,
+      },
+    });
+
+    res.json({
+      success: true,
+      userInfo: { userName: newUser.username, email: newUser.email },
+    });
+  } catch (error) {
+    res.status(400).json({ success: false, error: error.message });
+  }
+}
 module.exports = {
   signupController,
   loginController,
   autoLoginController,
   LogOutController,
+  changeInfoController,
+  changePasswordController,
   verify,
 };
 
@@ -173,8 +210,7 @@ async function login(userId, password) {
 
   const token = jwt.sign(
     {
-      email: user.email,
-      userId: user.username,
+      userId: user.id,
     },
     process.env.TOKEN_PRIVATE_KEY,
     { expiresIn: "8h" }

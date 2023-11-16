@@ -17,7 +17,6 @@ function authMiddleware(req, res, next) {
   }
 
   const decoded = verifyToken(token);
-  console.log(decoded);
 
   if (!decoded) {
     const error = new Error("Token Unauthorized");

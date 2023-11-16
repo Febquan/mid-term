@@ -5,16 +5,18 @@ import {
   DropdownSection,
   DropdownItem,
   User,
+  Link,
 } from "@nextui-org/react";
 import { useDispatch } from "react-redux";
 import { logoutSetState } from "../store/authSlice";
 import { useQueryClient } from "@tanstack/react-query";
 import api from "../axios/axios";
 import { useNavigate } from "react-router-dom";
+import { useQuery } from "@tanstack/react-query";
 export default function MyPopupUser() {
   const queryClient = useQueryClient();
-  const userInfo = queryClient.getQueryData(["userInfo"]);
-  console.log(userInfo);
+  const { data } = useQuery({ queryKey: ["userInfo"] });
+  const userInfo = data;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const onLogOut = async () => {
@@ -71,7 +73,15 @@ export default function MyPopupUser() {
         }}
       >
         <DropdownSection aria-label="Profile & Actions" showDivider>
-          <DropdownItem key="changeinfor">Change Information</DropdownItem>
+          <DropdownItem
+            key="changeinfor"
+            as={Link}
+            onClick={() => {
+              navigate("/Info");
+            }}
+          >
+            Change Information
+          </DropdownItem>
         </DropdownSection>
 
         <DropdownSection aria-label="Help & Feedback">

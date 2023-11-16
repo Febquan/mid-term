@@ -1,16 +1,20 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import PrivateRoute from "./pages/Auth/PrivateRoute";
 import Layout from "./pages/Layout";
 import Home from "./pages/Home/Home";
+import Info from "./pages/Settings/Info";
 import LandingPage from "./pages/LandingPage";
 import LoginSignUp from "./pages/Auth/LoginSignup";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import api from "./axios/axios";
 
 import { useDispatch } from "react-redux";
 import { loginSetState } from "./store/authSlice";
 function MyApp() {
   const dispatch = useDispatch();
+  const [autoLoginDataReady, setAutoLoginDataReady] = useState(false);
+  const [isNotLogin, setIsNotLogin] = useState(false);
   const autoLogin = async () => {
     try {
       const res = await api.get("user/autologin");
@@ -20,31 +24,58 @@ function MyApp() {
       console.log(err);
     }
   };
-  const { isSuccess } = useQuery({
+  const { isSuccess, isError } = useQuery({
     queryKey: ["userInfo"],
     queryFn: autoLogin,
-
-    onError: () => {
-      alert("Phiên làm việc hết hạn");
-    },
+    // Set to false to stop automatic refetching
   });
-
+  console.log(isSuccess);
   useEffect(() => {
     if (isSuccess) {
       dispatch(loginSetState());
+      setAutoLoginDataReady(true);
     }
-  }, [isSuccess, dispatch]);
+    if (isError) {
+      setIsNotLogin(true);
+    }
+  }, [isSuccess, dispatch, isError]);
   return (
     <>
       <BrowserRouter>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="Home" element={<Home />} />
-            <Route path="Login" element={<LoginSignUp />} />
-            <Route path="Landingpage" element={<LandingPage />} />
-          </Routes>
-        </Layout>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <Layout>
+                <Home />
+              </Layout>
+            }
+          />
+
+          <Route path="Login" element={<LoginSignUp />} />
+          <Route
+            path="Info"
+            element={
+              autoLoginDataReady && (
+                <PrivateRoute>
+                  <Layout>
+                    <Info />
+                  </Layout>
+                </PrivateRoute>
+              )
+            }
+          />
+
+          <Route
+            path="Landingpage"
+            element={
+              <Layout>
+                <LandingPage />
+              </Layout>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </BrowserRouter>
     </>
   );

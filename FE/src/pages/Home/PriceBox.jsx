@@ -11,7 +11,7 @@ export default function PriceBox({
 }) {
   return (
     <div
-      className={`flex h-fit flex-col items-center justify-between rounded-[1.14069rem] p-[2rem]   xl:h-[35rem] xl:w-full`}
+      className={`flex h-fit flex-col items-center justify-between rounded-[1.14069rem] p-[2rem] xl:h-fit   xl:w-full 2xl:h-[40rem]`}
       style={{
         backgroundColor: bgColor,
         boxShadow: `0px 0px 91.25442px 0px ${shadowColor}`,

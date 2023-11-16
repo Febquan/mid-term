@@ -39,22 +39,18 @@ export default function LoginForm({ handleChangeLogin }) {
       setLoading(true);
 
       const fetchUserInfo = async () => {
-        try {
-          const res = await api.post(
-            "/user/login",
-            {
-              userId: data.username,
-              password: data.password,
-            },
-            {
-              withCredentials: true,
-            },
-          );
-          if (res.data.success == true) {
-            return res.data.userInfo;
-          }
-        } catch (err) {
-          console.log(err);
+        const res = await api.post(
+          "/user/login",
+          {
+            userId: data.username,
+            password: data.password,
+          },
+          {
+            withCredentials: true,
+          },
+        );
+        if (res.data.success == true) {
+          return res.data.userInfo;
         }
       };
       await queryClient.fetchQuery({
