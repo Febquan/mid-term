@@ -1,9 +1,9 @@
-import AmbientLight1 from "./../assets/ambientlight1.png";
+import AmbientLight1 from "./../assets/ambient-light-1.png";
 import { Button } from "@nextui-org/react";
 import AutoImgAi from "../components/AutoImgAi";
 import { useNavigate } from "react-router-dom";
 export default function LandingPage() {
-  const navigate= useNavigate()
+  const navigate = useNavigate();
   return (
     <div className=" relative isolate flex h-fit w-full items-center justify-center bg-gradient-to-b from-black to-[#010420] p-[4rem]  lg:px-[6rem] 2xl:h-[calc(100vh-64px)]">
       <img
@@ -28,7 +28,9 @@ export default function LandingPage() {
           <Button
             color="primary"
             className=" mt-[1.5rem] w-fit self-center text-large font-bold md:self-start "
-            onClick={()=>{navigate('/')}}
+            onClick={() => {
+              navigate("/");
+            }}
           >
             Get Started
           </Button>

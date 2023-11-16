@@ -2,7 +2,7 @@ import MyArlertNotice from "../../components/MyArlertNotice";
 import api from "../../axios/axios";
 import { Spinner } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-import MyInput from "../../components/myInput";
+import MyInput from "../../components/MyInput";
 
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";

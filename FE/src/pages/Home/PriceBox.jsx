@@ -1,4 +1,4 @@
-import Checkicon from "./../../assets/checkIcon.svg";
+import Checkicon from "./../../assets/check-icon.svg";
 import { Button } from "@nextui-org/react";
 
 export default function PriceBox({

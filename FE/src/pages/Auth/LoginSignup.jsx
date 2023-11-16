@@ -1,6 +1,6 @@
-import TopPurpleCircle from "./../../assets/topPurpleCircle.svg";
+import TopPurpleCircle from "./../../assets/top-purple-circle.svg";
 import Logo from "./../../assets/logo.svg";
-import AmbientLight1 from "./../../assets/ambientlight1.png";
+import AmbientLight1 from "./../../assets/ambient-light-1.png";
 import { Image } from "@nextui-org/react";
 import { Link } from "react-router-dom";
 

@@ -1,10 +1,10 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import PrivateRoute from "./pages/Auth/PrivateRoute";
+import PrivateRoute from "./pages/auth/PrivateRoute";
 import Layout from "./pages/Layout";
-import Home from "./pages/Home/Home";
-import Info from "./pages/Settings/Info";
+import Home from "./pages/home/Home";
+import Info from "./pages/settings/Info";
 import LandingPage from "./pages/LandingPage";
-import LoginSignUp from "./pages/Auth/LoginSignup";
+import LoginSignUp from "./pages/auth/LoginSignup";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import api from "./axios/axios";

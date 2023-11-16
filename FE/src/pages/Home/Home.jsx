@@ -1,8 +1,8 @@
-import AmbientLight2 from "./../../assets/ambientlight2.png";
-import AmbientLight3 from "./../../assets/createyourspaceambientlight.png";
-import AmbientLight4 from "./../../assets/marketplaceambientlight.png";
+import AmbientLight2 from "./../../assets/ambient-light-2.png";
+import AmbientLight3 from "./../../assets/create-your-space-ambientlight.png";
+import AmbientLight4 from "./../../assets/market-place-ambientlight.png";
 
-import LogoLarge from "./../../assets/logolarge.svg";
+import LogoLarge from "./../../assets/logo-large.svg";
 import { Image } from "@nextui-org/react";
 import PriceBox from "./PriceBox";
 
