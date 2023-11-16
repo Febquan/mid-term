@@ -6,7 +6,7 @@ const app = express();
 const cors = require("cors");
 const authMiddleware = require("./middleware/authMiddleware");
 const userAuthRoute = require("./route/userRoutes");
-const port = 3000;
+const port = process.env.PORT;
 //cors
 
 app.use(cookieParser());
