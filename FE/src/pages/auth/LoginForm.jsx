@@ -11,7 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
 import { useDispatch } from "react-redux";
-import { loginSetState } from "./../../store/authSlice";
+import { loginSetState } from "../../store/authSlice";
 import { useQueryClient } from "@tanstack/react-query";
 
 const Schema = z.object({
