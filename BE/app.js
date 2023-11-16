@@ -12,7 +12,7 @@ const port = 3000;
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "http://localhost:5173",
+    origin: process.env.FRONTEND_URL,
     credentials: true,
   })
 );
@@ -30,7 +30,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/user", userAuthRoute);
-app.use("/", authMiddleware, (req, res, next) => {
+app.use("/", (req, res, next) => {
   res.send("hello");
 });
 
