@@ -43,10 +43,10 @@ async function loginController(req, res) {
   try {
     const { token, userInfo } = await login(userId, password);
     res.cookie("token", token, {
-      secure: process.env.NODE_ENV !== "development",
+      secure: true,
       httpOnly: true,
       maxAge: 3600000, // 1 hour in milliseconds
-      // sameSite: "strict", // Adjust according to your needs
+      sameSite: "none", // Adjust according to your needs
     });
     res.json({ success: true, userInfo });
   } catch (error) {

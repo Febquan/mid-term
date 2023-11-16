@@ -8,7 +8,6 @@ const authMiddleware = require("./middleware/authMiddleware");
 const userAuthRoute = require("./route/userRoutes");
 const port = process.env.PORT;
 //cors
-
 app.use(cookieParser());
 app.use(
   cors({
