@@ -20,10 +20,10 @@ export const theme = {
       onoffLine: "onoff 1s ease-in-out infinite",
     },
     backgroundImage: {
-      ourservice: "url('./src/assets/our-services.png')",
+      ourservice: 'url("./src/assets/our-services.png")',
     },
     content: {
-      purple: 'url("./src/assets/topPurpleCircle.svg")',
+      purple: 'url("./src/assets/top-purple-circle.svg")',
     },
   },
 };
