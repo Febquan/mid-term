@@ -1,6 +1,7 @@
 // tailwind.config.js
 import { nextui } from "@nextui-org/react";
 import tailwindCss3d from "tailwindcss-3d";
+
 /** @type {import('tailwindcss').Config} */
 export const content = [
   // ...
@@ -19,9 +20,7 @@ export const theme = {
     animation: {
       onoffLine: "onoff 1s ease-in-out infinite",
     },
-    backgroundImage: {
-      ourservice: 'url("./public/our-services.png")',
-    },
+
     content: {
       purple: 'url("./src/assets/top-purple-circle.svg")',
     },

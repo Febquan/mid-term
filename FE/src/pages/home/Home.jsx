@@ -1,7 +1,7 @@
 import AmbientLight2 from "./../../assets/ambient-light-2.png";
 import AmbientLight3 from "./../../assets/create-your-space-ambientlight.png";
 import AmbientLight4 from "./../../assets/market-place-ambientlight.png";
-
+import OurServiceImg from "./../../assets/our-services.png";
 import LogoLarge from "./../../assets/logo-large.svg";
 import { Image } from "@nextui-org/react";
 import PriceBox from "./PriceBox";
@@ -38,7 +38,12 @@ export default function Home() {
         ></img>
       </div>
       {/* ///////////////////////////////////////////////////// */}
-      <div className="relative isolate z-[2] flex h-full flex-col items-center justify-center bg-ourservice">
+      <div className="relative isolate z-[2] flex h-full flex-col items-center justify-center ">
+        <img
+          className="user-select-none pointer-events-none absolute left-1/2 top-1/2 z-0 h-full w-full  object-cover translate-x-[-50%] translate-y-[-50%] transform"
+          src={OurServiceImg}
+          alt="OurServiceImg"
+        ></img>
         <div className="flex h-full flex-col items-center justify-center p-[2.5rem] ">
           <Image
             className="user-select-none pointer-events-none z-10  scale-[70%]  transform md:scale-100 "
