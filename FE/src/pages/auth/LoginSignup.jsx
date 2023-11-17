@@ -38,7 +38,7 @@ export default function App() {
               To keep connected with us please login with your personal info
             </span>
           </div>
-          <div className="relative ">
+          <div className="relative 2xl:w-fit">
             <img
               src={TopPurpleCircle}
               alt="TopPurpleCircle"
@@ -47,9 +47,8 @@ export default function App() {
             <img
               src={TopPurpleCircle}
               alt="TopPurpleCircle"
-              className="absolute bottom-[-3rem] right-[-5rem] scale-[100%] "
+              className="absolute bottom-[-3rem] right-[-3rem] scale-[100%] "
             />
-
             <div className="my-gray-box relative flex h-fit w-full items-center justify-center py-[5rem]  xl:w-[30rem]">
               <div className="flex w-[65%] flex-col items-center justify-center gap-[1rem]">
                 {isLogin && (
